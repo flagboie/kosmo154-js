@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: cornflowerblue;
+            margin: 100px auto;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="box"></div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script>
+        // //gsap.to() : 요소를 움직일 애니메이션 위치를 지정. 즉 도달하고자 하는 state
+        // gsap.to(".box", {
+        //     x: 100, // x축으로 500px 이동
+        //     y: 300, // y축으로 200px 이동
+        //     duration: 15, // 애니메이션 지속 시간
+        //     ease: "bounce.Out", // 애니메이션의 속도 조절
+        //     rotation: 1200, // 회전 각도
+        //     scale: 2.5, // 크기 조절
+        //     backgroundColor: "red", // 배경색 변경
+        //     borderRadius: "50%", // 테두리 둥글게
+        // });
+
+        //assumes that an effect named "explode" has already been registered
+
+        const gsapEffects = [
+            {
+                id: "fadeSlideTo",
+                props: { opacity: 0.5, x: 300, yoyo: true, repeat: -1 }
+            },
+            {
+                id: "fadeSlideFrom",
+                animate: 'from',
+                props: { opacity: 0.25, x: 300, yoyo: true, repeat: -1 }
+            },
+            {
+                id: "fadeSlideFromTo",
+                animate: 'fromTo',
+                props: { opacity: 0.1, x: 300 },
+                props2: { opacity: 1, x: 600, yoyo: true, repeat: -1 }
+            }
+        ];
+
+        gsapEffects.forEach(effect => {
+            gsap.registerEffect({
+                name: effect.id,
+                defaults: { duration: 1 },
+                extendTimeline: true,
+                effect(targets, config) {
+                    if (effect.animate === 'from') {
+                        return gsap.from(targets, { ...effect.props, ...config })
+                    }
+                    else if (effect.animate === 'fromTo') {
+                        return gsap.fromTo(targets, { ...effect.props, ...config }, { ...effect.props2 })
+                    }
+                    else {
+                        return gsap.to(targets, { ...effect.props, ...config })
+                    }
+                }
+            });
+        });
+
+
+
+        let tl = gsap.timeline();
+        tl.fadeSlideTo(".fadeSlideTo")
+            .fadeSlideFrom(".fadeSlideFrom", 0)
+            .fadeSlideFromTo(".fadeSlideFromTo", 0)
+    </script>
+</body>
+
+</html>

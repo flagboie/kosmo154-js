@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: cornflowerblue;
+            margin: 100px auto;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="box"></div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script>
+        gsap.from(".box", {
+            x: 100, // x축으로 500px 이동
+            y: -100, // y축으로 200px 이동
+            opacity: 0, // 투명도
+            duration: 15, // 애니메이션 지속 시간
+            ease: "power1.out", // 애니메이션의 속도 조절
+            rotation: 500, // 회전 각도
+            scale: 2.5, // 크기 조절
+            backgroundColor: "red", // 배경색 변경
+            borderRadius: "50%", // 테두리 둥글게
+        });
+        //gsap.from() : 요소를 움직일 애니메이션 시작 위치를 지정. 즉 출발하는 state
+    </script>
+</body>
+
+</html>
